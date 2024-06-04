@@ -9,7 +9,12 @@ function processArray($arr) {
     //start edits
     //note: use the $arr variable to iterate over, don't directly touch $a1-$a4
     //jed56 6-3-24
-    echo "Printing the odd values only...";
+    echo "Printing the odd values only:<br>";
+    foreach ($arr as $value){
+        if ($value % 2 != 0 ){
+            echo $value . " ";
+        }
+    }
     //TODO add logic here to echo out only odd values
     //end edits
 }
