@@ -8,6 +8,8 @@ function processArray($arr) {
     echo "<br>Odds output:<br>";
     //start edits
     //note: use the $arr variable to iterate over, don't directly touch $a1-$a4
+    //jed56 6-3-24
+    echo "Printing the odd values only...";
     //TODO add logic here to echo out only odd values
     //end edits
 }
