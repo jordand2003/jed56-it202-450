@@ -10,11 +10,7 @@
             //TODO: add any extra onload processing you may need here
             document.querySelectorAll('nav ul li a').forEach(link => {
                link.addEventListener('click', (event) => {
-                   event.preventDefault();
-                   let selectedText = event.target.textContent;
-                   document.querySelector('h1').textContent = selectedText;
-                   document.title = selectedText;
-                   updateCurrentPage(selectedText.toLowerCase());
+                   getCurrentSelection();
                });
            })
         });
