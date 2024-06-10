@@ -9,72 +9,72 @@
             console.log("loaded via javascript");
             //TODO: add any extra onload processing you may need here
             document.querySelectorAll('nav ul li a').forEach(link => {
-                link.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    let selectedText = event.target.textContent;
-                    document.querySelector('h1').textContent = selectedText;
-                    document.title = selectedText;
-                    updateCurrentPage(selectedText.toLowerCase());
-                });
-            })
+               link.addEventListener('click', (event) => {
+                   event.preventDefault();
+                   let selectedText = event.target.textContent;
+                   document.querySelector('h1').textContent = selectedText;
+                   document.title = selectedText;
+                   updateCurrentPage(selectedText.toLowerCase());
+               });
+           })
         });
-
         function getCurrentSelection() {
             setTimeout(() => {
                 //added this delay here as some solutions may require it to update properly (i.e., click code may complete before the navigation changes)
                 //TODO: add code for processing the current selection 
                 // jed56 6-10-24
-                //Note: likely you'll want to call updateCurrentPage towards the end
 
                 let selectedText = window.location.hash.substring(1);
                 document.querySelector('h1').textContent = selectedText;
                 document.title = selectedText;
                 updateCurrentPage(selectedText);
+
+                //Note: likely you'll want to call updateCurrentPage towards the end
             }, 100);
         }
     </script>
     <style>
         /* TODO: make edits here */
         nav ul {
-            display: flex;
-            list-style-type: none;
-            background-color: lightgray;
-            padding: 10px;
-        }
-        nav ul li{
-            margin-right: 20px;
-        }
-        nav ul li a{
-            text-transform: capitalize;
-            text-decoration: none;
-            color: black;
-        }
-        nav ul li a:hover{
-            color: white;
-            background-color: black;
-            padding: 5px;
-        }
-        h1{
-            text-transform: capitalize;
-        }
-        ul:not(nav ul){
-            list-style-type: none;
-        }
-        ul:not(nav ul) li:before{
-            content: "✓";
-            color: green;
-        }
-        body{
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        header{
-            background-color: darkgray;
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-        }
+           display: flex;
+           list-style-type: none;
+           background-color: lightgray;
+           padding: 10px;
+       }
+       nav ul li{
+           margin-right: 20px;
+       }
+       nav ul li a{
+           text-transform: capitalize;
+           text-decoration: none;
+           color: black;
+       }
+       nav ul li a:hover{
+           color: white;
+           background-color: black;
+           padding: 5px;
+       }
+       h1{
+           text-transform: capitalize;
+       }
+       ul:not(nav ul){
+           list-style-type: none;
+       }
+       ul:not(nav ul) li:before{
+           content: "✓";
+           color: green;
+       }
+       body{
+           font-family: Arial, sans-serif;
+           margin: 0;
+           padding: 0;
+       }
+       header{
+           background-color: darkgray;
+           color: white;
+           padding: 10px 0;
+           text-align: center;
+       }
     </style>
     <!-- make the necessary edits above this line -->
 
