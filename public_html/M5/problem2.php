@@ -30,6 +30,12 @@ function processCars($cars) {
     $classic_age = 25; // don't change this value
     // Start edits
    
+    foreach ($cars as $car){
+        $age = $currentYear - $car['year'];
+        $isClassic = $age >= $classic_age;
+        $processedCars[] = array_merge($car, ['age' => $age, 'isClassic' => $isClassic]);
+    }
+    
     // End edits
     echo "<pre>" . var_export($processedCars, true) . "</pre>";
     
