@@ -58,7 +58,7 @@ function joinArrays($users, $activities) {
             }
         }
     }
-
+    
     // End edits
     echo "<pre>" . var_export($joined, true) . "</pre>";
 }
