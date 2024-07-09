@@ -1,5 +1,5 @@
 .alert-success {
-    background-color: #4CAF50; /* A professional green */
+    background-color: #4CAF50;
     color: white;
     padding: 15px 20px;
     border-radius: 5px;
@@ -8,7 +8,7 @@
 }
 
 .alert-warning {
-    background-color: #FFC107; /* A professional yellow */
+    background-color: #FFC107;
     color: black;
     padding: 15px 20px;
     border-radius: 5px;
@@ -17,7 +17,7 @@
 }
 
 .alert-danger {
-    background-color: #F44336; /* A professional red */
+    background-color: #F44336;
     color: white;
     padding: 15px 20px;
     border-radius: 5px;
@@ -26,7 +26,7 @@
 }
 
 .alert-info {
-    background-color: #343A40; /* A professional dark grey */
+    background-color: #343A40;
     color: white;
     padding: 15px 20px;
     border-radius: 5px;
@@ -36,14 +36,14 @@
 
 nav li {
     display: inline-block;
-    background-color: #343A40; /* Dark grey */
+    background-color: #343A40;
     margin: 0 10px;
     padding: 10px 15px;
     border-radius: 5px;
 }
 
 nav li a {
-    color: #FFFFFF; /* White */
+    color: #FFFFFF;
     text-decoration: none;
     font-weight: bold;
     font-size: 1rem;
@@ -57,8 +57,8 @@ input {
 }
 
 body {
-    background-color: #FFFFFF; /* White background */
-    color: #333333; /* Dark grey text for better readability */
+    background-color: #FFFFFF;
+    color: #333333;
     font-family: Arial, sans-serif;
     line-height: 1.6;
     margin: 0;
