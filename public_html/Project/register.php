@@ -1,6 +1,7 @@
 <?php
 require(__DIR__ . "/../../partials/nav.php");
 reset_session();
+// jed56 07/09/2024
 ?>
 <form onsubmit="return validate(this)" method="POST">
     <div>
@@ -21,25 +22,56 @@ reset_session();
     </div>
     <input type="submit" value="Register" />
 </form>
+<script src="helpers.js"></script>
 <script>
     function validate(form) {
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
+            const email = form.email.value.trim();
+            const username = form.username.value.trim();
+            const password = form.password.value.trim();
+            const confirm = form.confirm.value.trim();
 
+            if (email === "") {
+                flash("Email must not be empty");
+                return false;
+            }
+            const emailPattern = /\S+@\S+\.\S+/;
+            if (!emailPattern.test(email)) {
+                flash("Invalid email address");
+                return false;
+            }
+            const usernamePattern = /^[a-zA-Z0-9_-]{3,16}$/;
+            if (!usernamePattern.test(username)) {
+                flash("Username must only contain 3-16 characters a-z, 0-9, _, or -");
+                return false;
+            }
+            if (password === "") {
+                flash("Password must not be empty");
+                return false;
+            }
+            if (password.length < 8) {
+                flash("Password too short");
+                return false;
+            }
+            if (confirm === "") {
+                flash("Confirm password must not be empty");
+                return false;
+            }
+            if (password !== confirm) {
+                flash("Passwords must match");
+                return false;
+            }
         return true;
     }
 </script>
 <?php
 //TODO 2: add PHP Code
-if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm"])) {
+// jed56 07/09/2024
+if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm"]) && isset($_POST["username"])) {
     $email = se($_POST, "email", "", false);
     $password = se($_POST, "password", "", false);
-    $confirm = se(
-        $_POST,
-        "confirm",
-        "",
-        false
-    );
+    $confirm = se($_POST, "confirm", "", false);
     $username = se($_POST, "username", "", false);
     //TODO 3
     $hasError = false;
@@ -54,8 +86,8 @@ if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm
         flash("Invalid email address", "danger");
         $hasError = true;
     }
-    if (!preg_match('/^[a-z0-9_-]{3,16}$/', $username)) {
-        flash("Username must only contain 3-30 characters a-z, 0-9, _, or -", "danger");
+    if (!is_valid_username($username)) {
+        flash("Username must only contain 3-16 characters a-z, 0-9, _, or -", "danger");
         $hasError = true;
     }
     if (empty($password)) {
@@ -66,7 +98,7 @@ if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm
         flash("Confirm password must not be empty", "danger");
         $hasError = true;
     }
-    if (strlen($password) < 8) {
+    if (!is_valid_password($password)) {
         flash("Password too short", "danger");
         $hasError = true;
     }

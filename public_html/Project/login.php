@@ -1,5 +1,6 @@
 <?php
 require(__DIR__ . "/../../partials/nav.php");
+// jed56 7/9/24
 ?>
 <form onsubmit="return validate(this)" method="POST">
     <div>
@@ -12,46 +13,40 @@ require(__DIR__ . "/../../partials/nav.php");
     </div>
     <input type="submit" value="Login" />
 </form>
+<script src="helpers.js"></script>
 <script>
     function validate(form) {
-        // Retrieve email/username and password values
-        var email = form.email.value;
-        var password = form.password.value;
-        
-        // Regular expression for basic email validation
-        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        // Regular expression for basic username validation (letters and numbers only)
-        var usernamePattern = /^[a-zA-Z0-9]+$/;
+        //TODO 1: implement JavaScript validation
+        //ensure it returns false for an error and true for success
+        //jed56 7/10/24
+        const emailOrUsername = form.emailOrUsername.value.trim();
+        const password = form.password.value.trim();
 
-        // Check if email or username is provided
-        if (!email) {
-            alert("Please enter an email or username.");
-            return false;
-        }
+            if (emailOrUsername === "") {
+                flash("Email or Username must not be empty");
+                return false;
+            }
+            const emailPattern = /\S+@\S+\.\S+/;
+            const usernamePattern = /^[a-zA-Z0-9_-]{3,16}$/;
 
-        // Check if the email is valid
-        if (email.includes("@") && !emailPattern.test(email)) {
-            alert("Please enter a valid email address.");
-            return false;
-        }
-
-        // Check if the username is valid
-        if (!email.includes("@") && !usernamePattern.test(email)) {
-            alert("Please enter a valid username (letters and numbers only).");
-            return false;
-        }
-
-        // Check if password is provided and meets minimum length
-        if (!password || password.length < 8) {
-            alert("Password must be at least 8 characters long.");
-            return false;
-        }
-
+            if (!emailPattern.test(emailOrUsername)) {
+                if (!usernamePattern.test(emailOrUsername)) {
+                    flash("Invalid Email or Username format");
+                    return false;
+                }
+            }
+            if (password === "") {
+                flash("Password must not be empty");
+                return false;
+            }
+        //TODO update clientside validation to check if it should
+        //valid email or username
         return true;
     }
 </script>
 <?php
 //TODO 2: add PHP Code
+//jed56 7/9/24
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     $email = se($_POST, "email", "", false);
     $password = se($_POST, "password", "", false);
