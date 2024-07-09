@@ -46,7 +46,7 @@ try {
 ?>
 <h1>List Roles</h1>
 <form method="POST">
-    <input type="search" name="role" placeholder="Role Filter" value="<?php se($_POST, "role");?>" />
+    <input type="search" name="role" placeholder="Role Filter" />
     <input type="submit" value="Search" />
 </form>
 <table>
