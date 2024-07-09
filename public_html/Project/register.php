@@ -27,6 +27,7 @@ reset_session();
     function validate(form) {
         //TODO 1: implement JavaScript validation
         //ensure it returns false for an error and true for success
+        //jed56 7/10/24
             const email = form.email.value.trim();
             const username = form.username.value.trim();
             const password = form.password.value.trim();

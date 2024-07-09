@@ -23,9 +23,8 @@ function getDB(){
  	    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 	}
    	catch(Exception $e){
-            error_log("getDB() error: " . var_export($e, true));
+            var_export($e);
             $db = null;
-            throw new Exception("Error connecting to database, see logs for further information");
         }
     }
     return $db;
