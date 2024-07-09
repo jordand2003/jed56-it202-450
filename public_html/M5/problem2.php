@@ -35,10 +35,10 @@ function processCars($cars) {
         $isClassic = $age >= $classic_age;
         $processedCars[] = array_merge($car, ['age' => $age, 'isClassic' => $isClassic]);
     }
-    
+
     // End edits
     echo "<pre>" . var_export($processedCars, true) . "</pre>";
-    
+
 }
 
 echo "Problem 2: Getting Classy<br>";

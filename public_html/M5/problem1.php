@@ -39,7 +39,7 @@ function processBirds($birds) {
     // End edits
     echo "<pre>" . var_export($subset, true) . "</pre>";
     
-}
+} 
 
 echo "Problem 1: It's a bird....It's a plane...<br>";
 ?>
