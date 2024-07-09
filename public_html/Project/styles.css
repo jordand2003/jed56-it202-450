@@ -1,24 +1,67 @@
-
 .alert-success {
-    background-color: green
+    background-color: #4CAF50; /* A professional green */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 1rem;
 }
 
 .alert-warning {
-    background-color: yellow;
+    background-color: #FFC107; /* A professional yellow */
+    color: black;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 1rem;
 }
 
 .alert-danger {
-    background-color: red;
+    background-color: #F44336; /* A professional red */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 1rem;
 }
 
 .alert-info {
-    background-color: teal;
+    background-color: #343A40; /* A professional dark grey */
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 1rem;
 }
-nav li{display: inline; background-color: rebeccapurple;}
-nav li a{color: hotpink}
-input{border-radius: 50%;}
-body{
-background-color: hotpink;
-color: rgb(153, 0, 153);
 
+nav li {
+    display: inline-block;
+    background-color: #343A40; /* Dark grey */
+    margin: 0 10px;
+    padding: 10px 15px;
+    border-radius: 5px;
 }
+
+nav li a {
+    color: #FFFFFF; /* White */
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+input {
+    border-radius: 25px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+body {
+    background-color: #FFFFFF; /* White background */
+    color: #333333; /* Dark grey text for better readability */
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 20px;
+}
+
