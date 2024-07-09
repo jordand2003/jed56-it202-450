@@ -22,7 +22,8 @@ if (isset($_POST["name"]) && isset($_POST["description"])) {
             if ($e->errorInfo[1] === 1062) {
                 flash("A role with this name already exists, please try another", "warning");
             } else {
-                flash(var_export($e->errorInfo, true), "danger");
+                flash("Unknown error occurred, please try again", "danger");
+                error_log(var_export($e->errorInfo, true));
             }
         }
     }
