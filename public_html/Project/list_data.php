@@ -11,6 +11,7 @@ $is_admin = has_role("Admin");
 $query = "SELECT product_id, product_name, current_price, original_price, discount_percentage, image_url FROM products WHERE 1=1";
 $params = [];
 
+// Handle filtering
 if (isset($_GET["product_name"]) && !empty($_GET["product_name"])) {
     $search = se($_GET, "product_name", "", false);
     $query .= " AND product_name LIKE :product_name";
@@ -41,10 +42,12 @@ if (isset($_GET["max_price"]) && is_numeric($_GET["max_price"])) {
     $params[":max_price"] = $max_price;
 }
 
+// Handle sorting
 $sort_by = se($_GET, "sort_by", "modified", false);
 $sort_order = se($_GET, "sort_order", "DESC", false);
 $query .= " ORDER BY $sort_by $sort_order";
 
+// Handle limit
 $limit = se($_GET, "limit", 10, false);
 if (!is_numeric($limit) || $limit < 1 || $limit > 100) {
     $limit = 10;
