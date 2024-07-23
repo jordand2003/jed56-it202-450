@@ -44,9 +44,9 @@ try {
         <p><strong>Modified:</strong> <?php se($product, 'modified'); ?></p>
     </div>
     <div>
-        <a href="edit_product.php?id=<?php echo $product['product_id']; ?>">Edit</a>
         <?php if ($is_admin): ?>
-            <a href="delete_product.php?id=<?php echo $product['product_id']; ?>">Delete</a>
+            <a href="<?php echo get_url('admin/edit_product.php?id=' . $product['product_id']); ?>">Edit</a>
+            <a href="<?php echo get_url('admin/delete_product.php?id=' . $product['product_id']); ?>">Delete</a>
         <?php endif; ?>
     </div>
 <?php else: ?>
