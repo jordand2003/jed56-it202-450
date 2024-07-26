@@ -15,7 +15,7 @@ if (empty($product_id)) {
 }
 
 $db = getDB();
-$query = "SELECT product_id, product_name, current_price, original_price, discount_percentage, image_url FROM products WHERE product_id = :product_id";
+$query = "SELECT product_id, product_name, current_price, original_price, discount_percentage, image_url, data_source, created, modified FROM products WHERE product_id = :product_id";
 $stmt = $db->prepare($query);
 $product = null;
 try {
@@ -36,80 +36,120 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $original_price = se($_POST, "original_price", "", false);
     $discount_percentage = se($_POST, "discount_percentage", "", false);
     $image_url = se($_POST, "image_url", "", false);
-    $hasError = false;
+    $data_source = se($_POST, "data_source", "manual", false);
+    $errors = [];
 
     if (empty($name)) {
-        flash("Product name is required", "danger");
-        $hasError = true;
+        $errors[] = "Product name is required";
     }
     if (!is_numeric($current_price) || $current_price <= 0) {
-        flash("Current price must be a positive number", "danger");
-        $hasError = true;
+        $errors[] = "Current price must be a positive number";
     }
     if (!is_numeric($original_price) || $original_price <= 0) {
-        flash("Original price must be a positive number", "danger");
-        $hasError = true;
+        $errors[] = "Original price must be a positive number";
     }
     if (!is_numeric($discount_percentage) || $discount_percentage < 0 || $discount_percentage > 100) {
-        flash("Discount percentage must be between 0 and 100", "danger");
-        $hasError = true;
+        $errors[] = "Discount percentage must be between 0 and 100";
     }
 
-    if (!$hasError) {
-        $update_query = "UPDATE products SET product_name = :product_name, current_price = :current_price, original_price = :original_price, discount_percentage = :discount_percentage, image_url = :image_url WHERE product_id = :product_id";
-        $stmt = $db->prepare($update_query);
+
+    if (empty($errors)) {
+        $stmt = $db->prepare("UPDATE products SET product_name = :name, current_price = :current_price, original_price = :original_price, discount_percentage = :discount_percentage, image_url = :image_url, data_source = :data_source, modified = NOW() WHERE product_id = :product_id");
         try {
             $stmt->execute([
-                ":product_name" => $name,
+                ":name" => $name,
                 ":current_price" => $current_price,
                 ":original_price" => $original_price,
                 ":discount_percentage" => $discount_percentage,
                 ":image_url" => $image_url,
+                ":data_source" => $data_source,
                 ":product_id" => $product_id
             ]);
-            flash("Product updated successfully", "success");
-            $product = array_merge($product, [
-                'product_name' => $name,
-                'current_price' => $current_price,
-                'original_price' => $original_price,
-                'discount_percentage' => $discount_percentage,
-                'image_url' => $image_url
-            ]);
+            flash("Successfully updated product $name!", "success");
         } catch (PDOException $e) {
-            flash(var_export($e->errorInfo, true), "danger");
+            flash("An error occurred, please try again", "danger");
+            error_log(var_export($e->errorInfo, true));
+        }
+    } else {
+        foreach ($errors as $error) {
+            flash($error, "danger");
         }
     }
 }
 ?>
 
 <h1>Edit Product</h1>
-<form method="POST">
+<form method="POST" onsubmit="return validateForm()">
+    <div>
+        <label for="product_id">Product ID</label>
+        <input id="product_id" name="product_id" value="<?php se($product, 'product_id'); ?>" readonly />
+    </div>
     <div>
         <label for="product_name">Product Name</label>
-        <input type="text" id="product_name" name="product_name" value="<?php se($product, 'product_name'); ?>" required />
+        <input id="product_name" name="product_name" value="<?php se($product, 'product_name'); ?>" required />
     </div>
     <div>
         <label for="current_price">Current Price</label>
-        <input type="number" step="0.01" id="current_price" name="current_price" value="<?php se($product, 'current_price'); ?>" required />
+        <input id="current_price" name="current_price" type="number" step="0.01" min="0.01" value="<?php se($product, 'current_price'); ?>" required />
     </div>
     <div>
         <label for="original_price">Original Price</label>
-        <input type="number" step="0.01" id="original_price" name="original_price" value="<?php se($product, 'original_price'); ?>" required />
+        <input id="original_price" name="original_price" type="number" step="0.01" min="0.01" value="<?php se($product, 'original_price'); ?>" required />
     </div>
     <div>
         <label for="discount_percentage">Discount Percentage</label>
-        <input type="number" step="0.01" id="discount_percentage" name="discount_percentage" value="<?php se($product, 'discount_percentage'); ?>" required />
+        <input id="discount_percentage" name="discount_percentage" type="number" step="0.01" min="0" max="100" value="<?php se($product, 'discount_percentage'); ?>" required />
     </div>
     <div>
         <label for="image_url">Image URL</label>
-        <input type="url" id="image_url" name="image_url" value="<?php se($product, 'image_url'); ?>" />
+        <input id="image_url" name="image_url" type="url" value="<?php se($product, 'image_url'); ?>" />
     </div>
     <div>
-        <input type="submit" value="Update Product" />
+        <label for="data_source">Data Source</label>
+        <input id="data_source" name="data_source" value="<?php se($product, 'data_source'); ?>" readonly />
     </div>
+    <input type="submit" value="Update Product" />
 </form>
+
+<script>
+function validateForm() {
+    let product_name = document.getElementById('product_name').value;
+    let current_price = document.getElementById('current_price').value;
+    let original_price = document.getElementById('original_price').value;
+    let discount_percentage = document.getElementById('discount_percentage').value;
+    let image_url = document.getElementById('image_url').value;
+    let errors = [];
+
+    if (!product_name) {
+        errors.push("Product name is required");
+    }
+    if (!current_price || isNaN(current_price) || current_price <= 0) {
+        errors.push("Valid current price is required");
+    }
+    if (!original_price || isNaN(original_price) || original_price <= 0) {
+        errors.push("Valid original price is required");
+    }
+    if (!discount_percentage || isNaN(discount_percentage) || discount_percentage < 0 || discount_percentage > 100) {
+        errors.push("Valid discount percentage is required");
+    }
+
+    if (errors.length > 0) {
+        alert(errors.join("\n"));
+        return false;
+    }
+
+    return true;
+}
+
+function isValidUrl(urlString) {
+    try {
+        return Boolean(new URL(urlString));
+    } catch (e) {
+        return false;
+    }
+}
+</script>
 
 <?php
 require_once(__DIR__ . "/../../../partials/flash.php");
 ?>
-
