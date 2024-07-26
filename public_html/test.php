@@ -1,22 +1,16 @@
 <?php
-require(__DIR__ . "/../../../partials/nav.php");
-
-if (!has_role("Admin")) {
-    flash("You don't have permission to view this page", "warning");
-    die(header("Location: " . get_url("home.php")));
-}
 
 function fetch_and_process_api_data() {
     $api_key = "06f4fe2912mshe799dd41b35b27cp105d40jsn95e12f348139";
 
     if (!$api_key) {
-        flash("API KEY NOT SET");
         error_log("API key not set");
         return;
     }
 
     $curl = curl_init();
 
+    // Step 1: Fetch deal IDs from the Deals endpoint
     curl_setopt_array($curl, [
         CURLOPT_URL => "https://real-time-amazon-data.p.rapidapi.com/deals-v2?country=US&min_product_star_rating=ALL&price_range=ALL&discount_range=ALL",
         CURLOPT_RETURNTRANSFER => true,
@@ -53,6 +47,7 @@ function fetch_and_process_api_data() {
 
     $deals = $data["data"]["deals"];
 
+    // Step 2: Use deal IDs to get detailed product information from the Deal Products endpoint
     $db = getDB();
     foreach ($deals as $deal) {
         $deal_id = $deal['deal_id'];
@@ -96,8 +91,8 @@ function fetch_and_process_api_data() {
         foreach ($products as $product) {
             $product_id = $product['product_asin'];
             $product_name = $product['product_title'];
-            $current_price = isset($product['deal_price']) ? preg_replace('/[^0-9.]/', '', $product['deal_price']) : "0";
-            $original_price = isset($product['list_price']) ? preg_replace('/[^0-9.]/', '', $product['list_price']) : "0";
+            $current_price = isset($product['deal_price']) ? (string)$product['deal_price'] : "0";
+            $original_price = isset($product['list_price']) ? (string)$product['list_price'] : "0";
             preg_match('/(\d+)%/', $product['savings_percentage'], $matches);
             $discount_percentage = isset($matches[1]) ? (string)$matches[1] : "0";
             $image_url = $product['product_photo'];
@@ -161,9 +156,6 @@ function fetch_and_process_api_data() {
     flash("Successfully fetched and processed data from API", "success");
 }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    fetch_and_process_api_data();
-    header("Location: " . get_url("admin/fetch_api_data.php"));
-    exit();
-}
+fetch_and_process_api_data();
+
 ?>
