@@ -65,7 +65,6 @@ body {
     padding: 20px;
 }
 
-/* General table styling */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -74,7 +73,6 @@ table {
     text-align: left;
 }
 
-/* Table header styling */
 table thead th {
     background-color: #f2f2f2;
     color: #333;
@@ -83,25 +81,21 @@ table thead th {
     border-bottom: 2px solid #ddd;
 }
 
-/* Table body styling */
 table tbody td {
     padding: 12px 15px;
     border-bottom: 1px solid #ddd;
 }
 
-/* Zebra stripe rows */
 table tbody tr:nth-of-type(odd) {
     background-color: #f9f9f9;
 }
 
-/* Image styling */
 table tbody td img {
     width: 50px;
     height: 50px;
     border-radius: 5px;
 }
 
-/* Action links styling */
 table tbody td a {
     color: #007bff;
     text-decoration: none;
@@ -112,12 +106,10 @@ table tbody td a:hover {
     text-decoration: underline;
 }
 
-/* Hover effect for table rows */
 table tbody tr:hover {
     background-color: #f1f1f1;
 }
 
-/* Align text in the table */
 table tbody td, table thead th {
     text-align: center;
 }
