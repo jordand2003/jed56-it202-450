@@ -65,3 +65,87 @@ body {
     padding: 20px;
 }
 
+<<<<<<< Updated upstream
+=======
+/* General table styling */
+>>>>>>> Stashed changes
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: left;
+}
+
+<<<<<<< Updated upstream
+=======
+/* Table header styling */
+>>>>>>> Stashed changes
+table thead th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    padding: 12px 15px;
+    border-bottom: 2px solid #ddd;
+}
+
+<<<<<<< Updated upstream
+=======
+/* Table body styling */
+>>>>>>> Stashed changes
+table tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+
+<<<<<<< Updated upstream
+=======
+/* Zebra stripe rows */
+>>>>>>> Stashed changes
+table tbody tr:nth-of-type(odd) {
+    background-color: #f9f9f9;
+}
+
+<<<<<<< Updated upstream
+=======
+/* Image styling */
+>>>>>>> Stashed changes
+table tbody td img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+}
+
+<<<<<<< Updated upstream
+=======
+/* Action links styling */
+>>>>>>> Stashed changes
+table tbody td a {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+table tbody td a:hover {
+    text-decoration: underline;
+}
+
+<<<<<<< Updated upstream
+=======
+/* Hover effect for table rows */
+>>>>>>> Stashed changes
+table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+<<<<<<< Updated upstream
+=======
+/* Align text in the table */
+>>>>>>> Stashed changes
+table tbody td, table thead th {
+    text-align: center;
+}
+
+table thead th:first-child, table tbody td:first-child {
+    text-align: left;
+}
