@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 }
+//jed56 7-26-2024
 ?>
 
 <h1>Edit Product</h1>

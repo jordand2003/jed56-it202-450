@@ -29,6 +29,7 @@ try {
     flash(var_export($e->errorInfo, true), "danger");
     die(header("Location: " . get_url("list_data.php")));
 }
+//jed56 7-26-2024
 ?>
 
 <h1>Product Details</h1>
@@ -55,4 +56,5 @@ try {
 
 <?php
 require_once(__DIR__ . "/../../partials/flash.php");
+//jed56 7-26-2024
 ?>
