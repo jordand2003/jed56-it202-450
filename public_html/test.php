@@ -10,7 +10,6 @@ function fetch_and_process_api_data() {
 
     $curl = curl_init();
 
-    // Step 1: Fetch deal IDs from the Deals endpoint
     curl_setopt_array($curl, [
         CURLOPT_URL => "https://real-time-amazon-data.p.rapidapi.com/deals-v2?country=US&min_product_star_rating=ALL&price_range=ALL&discount_range=ALL",
         CURLOPT_RETURNTRANSFER => true,
