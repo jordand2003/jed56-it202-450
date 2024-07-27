@@ -19,6 +19,7 @@ if (isset($_POST["product_name"])) {
         $params[":product_name"] = "%$search%";
     }
 }
+//jed56 7-26-2024
 
 if (isset($_POST["min_price"]) && isset($_POST["max_price"])) {
     $min_price = se($_POST, "min_price", "", false);
@@ -76,7 +77,7 @@ try {
 } catch (PDOException $e) {
     flash(var_export($e->errorInfo, true), "danger");
 }
-
+//jed56 7-26-2024
 ?>
 
 <h1>List Products</h1>

@@ -14,6 +14,8 @@ if (empty($product_id)) {
     die(header("Location: " . get_url("list_data.php")));
 }
 
+//jed56 7-26-2024
+
 $db = getDB();
 $query = "SELECT product_id, product_name FROM products WHERE product_id = :product_id";
 $stmt = $db->prepare($query);
