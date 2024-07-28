@@ -45,6 +45,7 @@ session_start();
             <li><a href="<?php echo get_url('admin/data_creation.php'); ?>">Add Product</a></li>
             <li><a href="<?php echo get_url('admin/fetch_api_data.php'); ?>">Fetch API Data</a></li>
             <li><a href="<?php echo get_url('admin/all_user_associations.php'); ?>">All User Associations</a></li>
+            <li><a href="<?php echo get_url('admin/unassociated_data.php'); ?>">Unassociated Data</a></li>
         <?php endif; ?>
         <?php if (is_logged_in()) : ?>
             <li><a href="<?php echo get_url('list_data.php'); ?>">View Products</a></li>
