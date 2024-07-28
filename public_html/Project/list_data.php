@@ -81,75 +81,40 @@ try {
 ?>
 
 <h1>List Products</h1>
-<form method="POST" onsubmit="return validateForm()">
-    <div>
-        <label for="product_name">Product Name:</label>
-        <input type="text" id="product_name" name="product_name">
-    </div>
-    <div>
-        <label for="min_price">Min Price:</label>
-        <input type="number" id="min_price" name="min_price" step="0.01" min="0">
-    </div>
-    <div>
-        <label for="max_price">Max Price:</label>
-        <input type="number" id="max_price" name="max_price" step="0.01" min="0">
-    </div>
-    <div>
-        <label for="sort_by">Sort By:</label>
-        <select id="sort_by" name="sort_by">
-            <option value="modified_desc">Modified (Desc)</option>
-            <option value="price_asc">Price (Asc)</option>
-            <option value="price_desc">Price (Desc)</option>
-            <option value="discount_asc">Discount (Asc)</option>
-            <option value="discount_desc">Discount (Desc)</option>
-        </select>
-    </div>
-    <div>
-        <label for="limit">Limit:</label>
-        <input type="number" id="limit" name="limit" value="10" min="1" max="100">
-    </div>
-    <div>
-        <input type="submit" value="Search">
-    </div>
-</form>
 <table>
     <thead>
-        <tr>
-            <th>Image</th>
-            <th>Product ID</th>
-            <th>Product Name</th>
-            <th>Current Price</th>
-            <th>Original Price</th>
-            <th>Discount</th>
-            <th>Data Source</th>
-            <th>Actions</th>
-        </tr>
+        <th>Image</th>
+        <th>Product ID</th>
+        <th>Product Name</th>
+        <th>Current Price</th>
+        <th>Original Price</th>
+        <th>Discount</th>
+        <th>Data Source</th>
+        <th>Actions</th>
     </thead>
     <tbody>
-        <?php if (empty($products)) : ?>
+        <?php foreach ($products as $product) : ?>
             <tr>
-                <td colspan="8">No products</td>
+                <td><img src="<?php se($product, 'image_url'); ?>" alt="Product Image" width="50" height="50"></td>
+                <td><?php se($product, "product_id"); ?></td>
+                <td><?php se($product, "product_name"); ?></td>
+                <td><?php se($product, "current_price"); ?></td>
+                <td><?php se($product, "original_price"); ?></td>
+                <td><?php se($product, "discount_percentage"); ?>%</td>
+                <td><?php se($product, "data_source"); ?></td>
+                <td>
+                    <a href="view_product.php?id=<?php se($product, 'product_id'); ?>">View</a>
+                    <?php if (has_role("Admin")) : ?>
+                        <a href="edit_product.php?id=<?php se($product, 'product_id'); ?>">Edit</a>
+                        <a href="delete_product.php?id=<?php se($product, 'product_id'); ?>">Delete</a>
+                    <?php endif; ?>
+                    <form method="POST" action="add_to_wishlist.php">
+                        <input type="hidden" name="product_id" value="<?php se($product, 'product_id'); ?>" />
+                        <input type="submit" value="Add to Wishlist" />
+                    </form>
+                </td>
             </tr>
-        <?php else : ?>
-            <?php foreach ($products as $product) : ?>
-                <tr>
-                    <td><img src="<?php se($product, 'image_url'); ?>" alt="Product Image" width="50" height="50"></td>
-                    <td><?php se($product, "product_id"); ?></td>
-                    <td><?php se($product, "product_name"); ?></td>
-                    <td><?php se($product, "current_price"); ?></td>
-                    <td><?php se($product, "original_price"); ?></td>
-                    <td><?php se($product, "discount_percentage"); ?>%</td>
-                    <td><?php se($product, "data_source"); ?></td>
-                    <td>
-                        <a href="view_product.php?id=<?php se($product, 'product_id'); ?>">View</a>
-                        <?php if (has_role("Admin")) : ?>
-                            <a href="<?php echo get_url('admin/edit_product.php?id=' . $product['product_id']); ?>">Edit</a>
-                            <a href="<?php echo get_url('admin/delete_product.php?id=' . $product['product_id']); ?>">Delete</a>
-                        <?php endif; ?>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-        <?php endif; ?>
+        <?php endforeach; ?>
     </tbody>
 </table>
 
