@@ -1,4 +1,3 @@
--- Create the wishlists table
 CREATE TABLE wishlists (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
