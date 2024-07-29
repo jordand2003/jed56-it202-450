@@ -113,8 +113,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
                     <td><?php se($item, "data_source"); ?></td>
                     <td><?php se($item, "user_count"); ?></td>
                     <td>
-                        <a href="view_product.php?id=<?php se($item, 'product_id'); ?>">View</a>
-                        <a href="../remove_from_wishlist.php?id=<?php se($item, 'product_id'); ?>">Delete</a>
+                        <a href="../view_product.php?id=<?php se($item, 'product_id'); ?>">View</a>
+                        <a href="../remove_association.php?id=<?php se($item, 'product_id'); ?>">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>

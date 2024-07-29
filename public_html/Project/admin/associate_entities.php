@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_stmt = $db->prepare("SELECT id, username FROM Users WHERE username LIKE :user_query LIMIT 25");
     $user_stmt->execute([":user_query" => "%$user_query%"]);
     $users = $user_stmt->fetchAll(PDO::FETCH_ASSOC);
+    //jed56 7-29-2024
 }
 
 if (isset($_POST['associate'])) {
@@ -88,7 +89,7 @@ if (isset($_POST['associate'])) {
         </table>
         <button type="submit" name="associate">Apply Associations</button>
     </form>
-<?php else: ?>
+<?php else: //jed56 7-29-2024 ?>
     <p>No results available</p>
 <?php endif; ?>
 
