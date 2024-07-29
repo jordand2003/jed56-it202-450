@@ -90,7 +90,7 @@ $total_items = count($items);
                     <td><?php se($item, "discount_percentage"); ?>%</td>
                     <td><?php se($item, "data_source"); ?></td>
                     <td>
-                        <a href="view_product.php?id=<?php se($item, 'product_id'); ?>">View</a>
+                        <a href="../view_product.php?id=<?php se($item, 'product_id'); ?>">View</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
