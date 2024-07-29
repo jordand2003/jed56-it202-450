@@ -15,6 +15,8 @@ $sort_order = ($sort_order === "asc") ? "asc" : "desc";
 
 $username_filter = se($_GET, "username", "", false);
 
+//jed56 7-28-2024
+
 $db = getDB();
 $query = "SELECT u.username, w.id AS wishlist_id, p.*, COUNT(*) OVER(PARTITION BY p.product_id) AS user_count 
           FROM wishlists w 
@@ -35,6 +37,7 @@ foreach ($params as $key => $value) {
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+//jed56 7-28-2024
 $total_items = count($items);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
@@ -47,9 +50,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
         $stmt->execute();
         flash("All associations removed", "success");
     }
-    header("Location: " . get_url("all_user_associations.php"));
+    header("Location: " . get_url("admin/all_user_associations.php"));
     exit();
 }
+
+//jed56 7-28-2024
 ?>
 
 <h1>All User Associations (Total: <?php echo $total_items; ?>)</h1>
@@ -109,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
                     <td><?php se($item, "user_count"); ?></td>
                     <td>
                         <a href="view_product.php?id=<?php se($item, 'product_id'); ?>">View</a>
-                        <a href="remove_from_wishlist.php?id=<?php se($item, 'wishlist_id'); ?>">Delete</a>
+                        <a href="../remove_from_wishlist.php?id=<?php se($item, 'product_id'); ?>">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
