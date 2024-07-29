@@ -145,6 +145,10 @@ try {
                             <a href="<?php echo get_url('admin/edit_product.php?id=' . $product['product_id']); ?>">Edit</a>
                             <a href="<?php echo get_url('admin/delete_product.php?id=' . $product['product_id']); ?>">Delete</a>
                         <?php endif; ?>
+                        <form method="POST" action="add_to_wishlist.php">
+                        <input type="hidden" name="product_id" value="<?php se($product, 'product_id'); ?>" />
+                        <input type="submit" value="Add to Wishlist" />
+                    </form>
                     </td>
                 </tr>
             <?php endforeach; ?>
