@@ -16,9 +16,23 @@ $sort_by = se($_GET, "sort_by", "created", false);
 $sort_order = se($_GET, "sort_order", "desc", false);
 $sort_order = ($sort_order === "asc") ? "asc" : "desc";
 
+$search = se($_GET, "search", "", false);
+
 $db = getDB();
-$stmt = $db->prepare("SELECT w.id AS wishlist_id, p.* FROM wishlists w JOIN products p ON w.product_id = p.product_id WHERE w.user_id = :user_id ORDER BY $sort_by $sort_order LIMIT :limit");
+$query = "SELECT w.id AS wishlist_id, p.* FROM wishlists w JOIN products p ON w.product_id = p.product_id WHERE w.user_id = :user_id";
+$params = [":user_id" => $user_id];
+
+if (!empty($search)) {
+    $query .= " AND p.product_name LIKE :search";
+    $params[":search"] = "%$search%";
+}
+
+$query .= " ORDER BY $sort_by $sort_order LIMIT :limit";
+$stmt = $db->prepare($query);
 $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+if (!empty($search)) {
+    $stmt->bindValue(":search", "%$search%", PDO::PARAM_STR);
+}
 $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
 $stmt->execute();
 $wishlist_items = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -53,6 +67,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
         <option value="desc" <?php if ($sort_order === "desc") echo "selected"; ?>>Descending</option>
     </select>
 
+    <label for="search">Product Name:</label>
+    <input type="text" name="search" id="search" value="<?php echo htmlspecialchars($search); ?>" />
+
     <button type="submit">Apply</button>
 </form>
 
@@ -81,9 +98,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
                     <td><?php se($item, "current_price"); ?></td>
                     <td><?php se($item, "original_price"); ?></td>
                     <td><?php se($item, "discount_percentage"); ?>%</td>
+                    <td><?php se($item, "data_source"); ?></td>
                     <td>
                         <a href="view_product.php?id=<?php se($item, 'product_id'); ?>">View</a>
-                        <a href="remove_from_wishlist.php?id=<?php se($item, 'product_id'); ?>">Delete</a>
+                        <form method="POST" action="remove_from_wishlist.php" style="display:inline;">
+                            <input type="hidden" name="product_id" value="<?php se($item, 'product_id'); ?>">
+                            <button type="submit" name="remove">Delete</button>
+                        </form>
                     </td>
                 </tr>
             <?php endforeach; ?>
