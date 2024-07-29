@@ -8,6 +8,7 @@ if (!has_role("Admin")) {
 
 $limit = (int)se($_GET, "limit", 10, false);
 $limit = max(1, min($limit, 100));
+//jed56 7-28-2024
 
 $sort_by = se($_GET, "sort_by", "created", false);
 $sort_order = se($_GET, "sort_order", "desc", false);
@@ -61,7 +62,8 @@ $total_items = count($items);
     <button type="submit">Apply</button>
 </form>
 
-<?php if (empty($items)): ?>
+<?php if (empty($items)):     //jed56 7-29-2024
+?>
     <p>No results available</p>
 <?php else: ?>
     <table>
@@ -88,7 +90,7 @@ $total_items = count($items);
                     <td><?php se($item, "discount_percentage"); ?>%</td>
                     <td><?php se($item, "data_source"); ?></td>
                     <td>
-                        <a href="view_product.php?id=<?php se($item, 'product_id'); ?>">View</a>
+                        <a href="../view_product.php?id=<?php se($item, 'product_id'); ?>">View</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
