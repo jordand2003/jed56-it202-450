@@ -13,11 +13,23 @@ $sort_by = se($_GET, "sort_by", "created", false);
 $sort_order = se($_GET, "sort_order", "desc", false);
 $sort_order = ($sort_order === "asc") ? "asc" : "desc";
 
+$search = se($_GET, "search", "", false);
+
 $db = getDB();
 $query = "SELECT p.* FROM products p LEFT JOIN wishlists w ON p.product_id = w.product_id WHERE w.product_id IS NULL";
+$params = [];
+
+if (!empty($search)) {
+    $query .= " AND p.product_name LIKE :search";
+    $params[":search"] = "%$search%";
+}
+
 $query .= " ORDER BY $sort_by $sort_order LIMIT :limit";
 $stmt = $db->prepare($query);
 $stmt->bindValue(":limit", $limit, PDO::PARAM_INT);
+foreach ($params as $key => $value) {
+    $stmt->bindValue($key, $value);
+}
 $stmt->execute();
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -42,6 +54,9 @@ $total_items = count($items);
         <option value="asc" <?php if ($sort_order === "asc") echo "selected"; ?>>Ascending</option>
         <option value="desc" <?php if ($sort_order === "desc") echo "selected"; ?>>Descending</option>
     </select>
+
+    <label for="search">Product Name:</label>
+    <input type="text" name="search" id="search" value="<?php echo htmlspecialchars($search); ?>" />
 
     <button type="submit">Apply</button>
 </form>
