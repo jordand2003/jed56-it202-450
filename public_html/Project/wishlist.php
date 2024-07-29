@@ -101,10 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
                     <td><?php se($item, "data_source"); ?></td>
                     <td>
                         <a href="view_product.php?id=<?php se($item, 'product_id'); ?>">View</a>
-                        <form method="POST" action="remove_from_wishlist.php" style="display:inline;">
-                            <input type="hidden" name="product_id" value="<?php se($item, 'product_id'); ?>">
-                            <button type="submit" name="remove">Delete</button>
-                        </form>
+                        <a href="remove_from_wishlist.php?id=<?php se($item, 'product_id'); ?>">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
