@@ -6,6 +6,8 @@ if (!is_logged_in()) {
     die(header("Location: " . get_url("login.php")));
 }
 
+//jed56 7-28-2024
+
 $user_id = get_user_id();
 $limit = (int)se($_GET, "limit", 10, false);
 $limit = max(1, min($limit, 100));
@@ -81,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_all'])) {
                     <td><?php se($item, "discount_percentage"); ?>%</td>
                     <td>
                         <a href="view_product.php?id=<?php se($item, 'product_id'); ?>">View</a>
-                        <a href="remove_from_wishlist.php?id=<?php se($item, 'wishlist_id'); ?>">Delete</a>
+                        <a href="remove_from_wishlist.php?id=<?php se($item, 'product_id'); ?>">Delete</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
