@@ -6,8 +6,10 @@ if (!has_role("Admin")) {
     die(header("Location: " . get_url("home.php")));
 }
 
-function fetch_and_process_api_data() {
-    $api_key = "06f4fe2912mshe799dd41b35b27cp105d40jsn95e12f348139";
+$ini = @parse_ini_file(__DIR__ . "/../../../lib/.env");
+
+function fetch_and_process_api_data($ini) {
+    $api_key = $ini["API_KEY"];
 
     if (!$api_key) {
         flash("API KEY NOT SET");
@@ -162,7 +164,7 @@ function fetch_and_process_api_data() {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    fetch_and_process_api_data();
+    fetch_and_process_api_data($ini);
     header("Location: " . get_url("admin/fetch_api_data.php"));
     exit();
 }
